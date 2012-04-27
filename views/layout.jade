@@ -48,30 +48,12 @@ html
         </div>
         <div class="span9">
           {{#hasRecords}}
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>When</th>
-                <th>Who</th>
-                <th>Message</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#records}}
-              <tr>
-                <td>
-                  [{{when}}]
-                </td>
-                <td>
-                  &lt;{{message.nick}}&gt;
-                </td>
-                <td>
-                  {{message.text}}
-                </td>
-              </tr>
-              {{/records}}
-            </tbody>
-          </table>
+          {{#records}}
+          <div class="row" style="margin-bottom: 7px;">
+            <div class="span2">[{{when}}]&nbsp;&nbsp;&lt;{{message.nick}}&gt;</div>
+            <div class="span7">{{message.text}}</div>
+          </div>
+          {{/records}}
           {{/hasRecords}}
           {{^hasRecords}}
           <div class="hero-unit">

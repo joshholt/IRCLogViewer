@@ -34,16 +34,11 @@ module.exports = {
 
   chanDay: function(req, res, next) {
     var channel = req.params.channel, day = req.params.day;
-
+    var query   = {"message.to": "#" + channel, timestamp: {$gte: req.start, $lte: req.end}};
+    
     db.all(
       db.logs,
-      {
-        "message.to": {$exists: true},
-        "message.to": "#" + req.params.channel,
-        timestamp: {
-          $gte: req.start,
-          $lte: req.end}
-      },
+      query,
       generatedQueryCallback(channel, day, res, next)
     );
   }
