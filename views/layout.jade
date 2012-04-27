@@ -1,0 +1,83 @@
+!!!
+html
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="chrome=1")
+    != css('app')
+    != css('style')
+  body
+    .navbar(class="navbar-fixed-top")
+      .navbar-inner
+        .container-fluid
+          a.brand(href="/")= title
+    .container
+    #loader: center: img(src="/img/spinner.gif")
+    != js("jquery.min.1.7.1")
+    != js("bootstrap")
+    != js("jquery.mustache")
+    != js("app")
+    script(type="text/template", id="everything-templ").
+      <div class="page-header">
+        <h1 class="header">{{title}}</h1>
+        {{#hasRecords}}
+        <small>{{count}} messages...</small>
+        {{/hasRecords}}
+      </div>
+
+      <div class="row">
+        <div class="span3">
+          <div class="well sidebar-nav" style="padding: 8px 0;">
+            <ul id="" class="nav nav-list">
+              <li class="nav-header">Developers</li>
+              <li id="developers-monday"><a class="ajax-link" href="/developers/monday"><i class="icon-book"></i>Monday</a></li>
+              <li id="developers-tuesday"><a class="ajax-link" href="/developers/tuesday"><i class="icon-book"></i>Tuesday</a></li>
+              <li id="developers-wednesday"><a class="ajax-link" href="/developers/wednesday"><i class="icon-book"></i>Wednesday</a></li>
+              <li id="developers-thursday"><a class="ajax-link" href="/developers/thursday"><i class="icon-book"></i>Thursday</a></li>
+              <li id="developers-friday"><a class="ajax-link" href="/developers/friday"><i class="icon-book"></i>Friday</a><classi>
+
+              <li class="nav-header">Announcements</li>
+              <li id="announcements-monday"><a class="ajax-link" href="/announcements/monday"><i class="icon-book"></i>Monday</a></li>
+              <li id="announcements-tuesday"><a class="ajax-link" href="/announcements/tuesday"><i class="icon-book"></i>Tuesday</a></li>
+              <li id="announcements-wednesday"><a class="ajax-link" href="/announcements/wednesday"><i class="icon-book"></i>Wednesday</a></li>
+              <li id="announcements-thursday"><a class="ajax-link" href="/announcements/thursday"><i class="icon-book"></i>Thursday</a></li>
+              <li id="announcements-friday"><a class="ajax-link" href="/announcements/friday"><i class="icon-book"></i>Friday</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          {{#hasRecords}}
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Who</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#records}}
+              <tr>
+                <td>
+                  [{{when}}]
+                </td>
+                <td>
+                  &lt;{{message.nick}}&gt;
+                </td>
+                <td>
+                  {{message.text}}
+                </td>
+              </tr>
+              {{/records}}
+            </tbody>
+          </table>
+          {{/hasRecords}}
+          {{^hasRecords}}
+          <div class="hero-unit">
+            <h1>Go start a conversation...</h1>
+            <p>So far it has been quiet in {{channel}} today</p>
+          </div>
+          {{/hasRecords}}
+        </div>
+      </div>    

@@ -1,0 +1,30 @@
+body {
+	padding-top: 60px;
+}
+
+.page-header .breadcrumb {
+	margin: 7px 0 0;
+}
+
+dl dd p {
+	word-wrap: break-word;
+}
+
+.stacktrace {
+	word-wrap: break-word;
+}
+
+.row .span9 {
+  height: 500px;
+  overflow: auto;
+}
+
+#loader {
+	display: none;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 45px;
+	background: #F3F3F3;
+}
