@@ -12,6 +12,7 @@ function generatedQueryCallback(channel, day, res, next) {
       data.records = data.records.map(function(r) {
         var when = new Date(r.timestamp);
         r.when = when.toLocaleTimeString();
+				delete r._id;
         data.title = "#"+channel+" ("+when.toLocaleDateString()+")";
         return r;
       });
