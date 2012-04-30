@@ -6,7 +6,7 @@ onData = (templateName)->
     report = $.mustache view, data
     $('.page-header').remove()
     $('.row').remove()
-    $(".container").append report
+    $("#content").append report
 
     $("#"+data.channel+"-"+data.day).addClass("active");
     $("li.active > a > i").addClass('icon-white')
@@ -16,12 +16,14 @@ onData = (templateName)->
       $.get $(this).attr("href"), onData(templateName)
 
 $ ->
+  today = new Date()
   $("#loader").hide().ajaxStart(-> $(this).show()).ajaxStop(-> $(this).hide())
-  d = new Date()
-  dow = "monday" if d.getDay() is 1
-  dow = "tuesday" if d.getDay() is 2
-  dow = "wednesday" if d.getDay() is 3
-  dow = "thursday" if d.getDay() is 4
-  dow = "friday" if d.getDay() is 5
+  switch today.getUTCDay()
+    when 1 then dow = "monday"
+    when 2 then dow = "tuesday"
+    when 3 then dow = "wednesday"
+    when 4 then dow = "thursday"
+    when 5,6,7 then dow = "friday"
+
   $.get "/developers/#{dow}", onData("everything")
 
