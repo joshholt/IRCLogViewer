@@ -22,7 +22,8 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
-app.get  '/',                   routes.index
+app.get  '/',                     routes.index
+app.get  '/graphs/:channel?',     routes.graphs
 app.get  '/:channel/:day/:page?', middle.generateDateRange, routes.chanDay
 
 app.listen port

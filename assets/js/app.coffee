@@ -1,9 +1,13 @@
 changeState = (data, desc, newUrl) -> window.history.pushState data, desc, newUrl
 
+hydrateTemplate = (templateID, data)->
+  templ = $("##{templateID}-templ").html()
+  hydrated = $.mustache templ, data
+  return hydrated
+
 onData = (templateName)->
   return (data, textStatus, jqXHR)->
-    view = $("##{templateName}-templ").html()
-    report = $.mustache view, data
+    report = hydrateTemplate templateName, data
     $('.page-header').remove()
     $('.row').remove()
     $("#content").append report
@@ -25,5 +29,14 @@ $ ->
     when 4 then dow = "thursday"
     when 5,6,7 then dow = "friday"
 
-  $.get "/developers/#{dow}", onData("everything")
+  if window.location.pathname.indexOf('graphs') == -1
+    $.get "/developers/#{dow}", onData("everything")
+  else
+    # Implement Graph Loading
+    # for now I'll do this manually
+    templ = hydrateTemplate 'graphs', {}
+    $('.page-header').remove()
+    $('.row').remove()
+    $("#content").append templ
+
 

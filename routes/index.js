@@ -42,6 +42,10 @@ module.exports = {
       query,
       generatedQueryCallback(channel, day, res, next)
     );
+  },
+
+  graphs: function (req, res, next) {
+    res.render('graphs', { title: 'IRC Logs'});
   }
 
 };

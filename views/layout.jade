@@ -14,10 +14,12 @@ html
         .container
           a(class='btn btn-navbar', data-toggle='collapse', data-target='.nav-collapse')
             span.icon-bar
+            span.icon-bar
           a.brand(href="/")= title
           .nav-collapse
             ul.nav
               li: a.ajax-link(href="/archives") Archives
+              li: a(href="/graphs") Graphs
     #content(class='container')
     #loader: center: img(src="/img/spinner.gif")
     != js("jquery.min.1.7.1")
