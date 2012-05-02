@@ -29,14 +29,19 @@ $ ->
     when 4 then dow = "thursday"
     when 5,6,7 then dow = "friday"
 
-  if window.location.pathname.indexOf('graphs') == -1
-    $.get "/developers/#{dow}", onData("everything")
-  else
+  if window.location.pathname.indexOf('graphs') > -1
     # Implement Graph Loading
     # for now I'll do this manually
     templ = hydrateTemplate 'graphs', {}
     $('.page-header').remove()
     $('.row').remove()
     $("#content").append templ
-
-
+  else if window.location.pathname.indexOf('archives') > -1
+    # Implement Archive Loading
+    # for not I'll do this manually
+    templ = hydrateTemplate 'archives', {}
+    $('.page-header').remove()
+    $('.row').remove()
+    $("#content").append templ
+  else
+    $.get "/developers/#{dow}", onData("everything")

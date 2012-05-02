@@ -23,6 +23,7 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.get  '/',                     routes.index
+app.get  '/archives/:channel?',   routes.archives
 app.get  '/graphs/:channel?',     routes.graphs
 app.get  '/:channel/:day/:page?', middle.generateDateRange, routes.chanDay
 

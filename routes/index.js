@@ -45,7 +45,11 @@ module.exports = {
   },
 
   graphs: function (req, res, next) {
-    res.render('graphs', { title: 'IRC Logs'});
+    res.render('graphs', { title: 'IRC Logs' });
+  },
+
+  archives: function(req, res, next) {
+    res.render('archives', { title: 'IRC Logs' });
   }
 
 };
