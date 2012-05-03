@@ -43,6 +43,80 @@ handleGraphs = ()->
   $('.row').remove()
   $("#content").append(hydrateTemplate( 'graphs', {}))
 
+  # do the graph stuff here.
+  options =
+    chart:
+      renderTo: 'graphArea'
+    title:
+      text: 'Messages Daily'
+    xAxis:
+      type: 'datetime'
+      tickInterval: (7*24*3600*1000)
+      tickWidth: 0
+      gridLineWidth: 1
+      label:
+        align: 'left'
+        x: 3
+        y: (-3)
+    yAxis: [
+      title:
+        text: null
+      labels:
+        align: 'left'
+        x: 3
+        y: 16
+        formatter: ->
+          Highcharts.numberFormat this.value, 0
+      showFirstLabel: false
+    
+    linkedTo: 0
+    gridLineWidth: 0
+    opposite: true
+    title:
+      text: null
+    labels:
+      align: 'right'
+      x: -3
+      y: 16
+      formatter: ->
+        Highcharts.numberFormat this.value, 0
+    showFirstLabel: false
+    ]
+    legend:
+      align: 'left'
+      verticalAlign: 'top'
+      y: 7
+      floating: true
+      borderWidth: 0
+    tooltip:
+      shared: true
+      crosshairs: true
+    plotOptions:
+      series:
+        cursor: 'pointer'
+        point:
+          events:
+            click: ->
+              hs.htmlExpand(null, { pageOrigin: { x: this.pageX, y: this.pageY }, headingText: this.series.name, maincontentText: "#{Highcharts.dateFormat("%A, %b %e, %Y", this.x)}:<br/>#{this.y} messages", width: 200})
+        marker:
+          lineWidth: 1
+    series: [
+      name: 'Messages'
+    ]
+
+  $.get '/archives/index', (data, textStatus, jqXHR)->
+    ret = []
+    months = data.records[0].years[0].months
+    insertRecord = (rec) ->
+      dte = Date.parse((new Date(rec.year, rec.month, rec.day)))
+      cnt = rec.count
+      ret.push [dte, cnt]
+    for m in months
+      insertRecord d for d in m.days
+    options.series[0].data = ret
+    chart = new Highcharts.Chart options
+
+
 $ ->
   $("#loader").hide().ajaxStart(-> $(this).show()).ajaxStop(-> $(this).hide())
   today = (new Date()).getUTCDay()

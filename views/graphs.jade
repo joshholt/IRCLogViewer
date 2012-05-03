@@ -1,3 +1,9 @@
+script(src="http://code.highcharts.com/highcharts.js", type="text/javascript")
+script(src="http://code.highcharts.com/modules/exporting.js", type="text/javascript")
+script(src="http://www.highcharts.com/highslide/highslide-full.min.js", type="text/javascript")
+script(src="http://www.highcharts.com/highslide/highslide.config.js", type="text/javascript")
+link(rel="stylesheet", type="text/css", href="http://www.highcharts.com/highslide/highslide.css")
+
 script(type="text/template", id="graphs-templ").
   <div class="tabbable">
     <ul class="nav nav-tabs">
@@ -6,16 +12,17 @@ script(type="text/template", id="graphs-templ").
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab1">
-        <div class="hero-unit">
-          <h1>#Developers Graphs</h1>
-          <p>Graphs for the #Developers Channel will go here.</p>
+        <div class="page-header">
+          <h1>#Developers Graph</h1>
         </div>
+        <div id="graphArea" style="min-width: 400px; height: 400px; margin: 0 auto;"></div>
       </div>
       <div class="tab-pane" id="tab2">
         <div class="hero-unit">
-          <h1>#Announcements Graphs</h1>
+          <h1>#Announcements Graph</h1>
           <p>Graphs for the #Announcements Channel will go here.</p>
         </div>
+        <div id="graphArea" style="min-width: 400px; height: 400px; margin: 0 auto;"></div>
       </div>
     </div>
   </div>
