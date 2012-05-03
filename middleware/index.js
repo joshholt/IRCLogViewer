@@ -46,7 +46,7 @@ calcEnd = function(now, wanted) {
 };
 
 module.exports = {
-	generateDateRange: function(req, res, next) {
+	generateDateRangeByName: function(req, res, next) {
 		var dayOfWeek = req.params.day, now = new Date();
 
 		switch (dayOfWeek) {
@@ -76,5 +76,10 @@ module.exports = {
 				next();
 				break;
 		}
+	},
+	generateDateRangeByDate: function(req, res, next) {
+		req.start = new Date(req.params.year, req.params.month, req.params.day, 0,0,0);
+		req.end   = new Date(req.params.year, req.params.month, req.params.day, 23,59,59);
+		next();
 	}
 };

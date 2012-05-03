@@ -22,10 +22,12 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
-app.get  '/',                     routes.index
-app.get  '/archives/:channel?',   routes.archives
-app.get  '/graphs/:channel?',     routes.graphs
-app.get  '/:channel/:day/:page?', middle.generateDateRange, routes.chanDay
+app.get  '/',                                          routes.index
+app.get  '/archives',                                  routes.archives
+app.get  '/archives/index',                            routes.archivesBase
+app.get  '/archives/:channel/:year/:month/:day',       middle.generateDateRangeByDate, routes.archivesChanDay
+app.get  '/graphs/:channel?',                          routes.graphs
+app.get  '/:channel/:day/:page?',                      middle.generateDateRangeByName, routes.chanDay
 
 app.listen port
 console.log "IRCLOG server listening on port #{port}"

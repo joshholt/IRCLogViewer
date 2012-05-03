@@ -10,10 +10,12 @@ function generatedQueryCallback(channel, day, res, next) {
 
     if (data.records.length > 0) {
       data.records = data.records.map(function(r) {
-        var when = new Date(r.timestamp);
-        r.when = when.toLocaleTimeString();
-				delete r._id;
-        data.title = "#"+channel+" ("+when.toLocaleDateString()+")";
+        delete r._id;
+        if (r.timestamp) {
+          var when = new Date(r.timestamp);
+          r.when = when.toLocaleTimeString();
+          data.title = "#"+channel+" ("+when.toLocaleDateString()+")";
+        }
         return r;
       });
     } else {
@@ -34,8 +36,8 @@ module.exports = {
   },
 
   chanDay: function(req, res, next) {
-    var channel = req.params.channel, day = req.params.day;
-    var query   = {"message.to": "#" + channel, timestamp: {$gte: req.start, $lte: req.end}};
+    var channel = req.params.channel, day = req.params.day,
+        query   = {"message.to": "#" + channel, timestamp: {$gte: req.start, $lte: req.end}};
     
     db.all(
       db.logs,
@@ -50,6 +52,28 @@ module.exports = {
 
   archives: function(req, res, next) {
     res.render('archives', { title: 'IRC Logs' });
+  },
+
+  archivesBase: function(req, res, next) {
+    var channel = req.params.channel || '#developers',
+        query   = {"_id.channel": channel};
+
+    db.all(
+      db.mpd,
+      query,
+      generatedQueryCallback(channel, "Archive", res, next)
+    );
+  },
+
+  archivesChanDay: function(req, res, next) {
+    var channel = req.params.channel, day = req.params.day,
+        query   = {"message.to": "#" + channel, timestamp: {$gte: req.start, $lte: req.end}};
+    
+    db.all(
+      db.logs,
+      query,
+      generatedQueryCallback(channel, day, res, next)
+    );
   }
 
 };
