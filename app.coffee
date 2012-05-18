@@ -22,6 +22,11 @@ app.configure 'development', ->
 app.configure 'production', ->
   app.use express.errorHandler()
 
+app.all  '/', (req, res, next) ->
+  res.header "Access-Control-Allow-Origin", "*"
+  res.header "Access-Control-Allow-Headers", "X-Requested-With"
+  next()
+
 app.get  '/',                                          routes.index
 app.get  '/archives',                                  routes.archives
 app.get  '/archives/index',                            routes.archivesBase
