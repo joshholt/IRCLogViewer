@@ -5,6 +5,12 @@ app            = express.createServer();
 port           = process.env.PORT || 3000;
 module.exports = app;
 
+allowCrossDomain = (req, res, next) ->
+  res.header 'Access-Control-Allow-Origin', "*"
+  res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'
+  res.header 'Access-Control-Allow-Headers', 'origin, x-requested-with, if-modified-since, cache-control, content-type'
+  next()
+
 app.configure ->
   app.use express.static("#{__dirname}/public")
   app.set 'views', "#{__dirname}/views"
@@ -14,6 +20,7 @@ app.configure ->
   app.use express.logger('dev')
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use allowCrossDomain
   app.use app.router
 
 app.configure 'development', ->
@@ -21,11 +28,6 @@ app.configure 'development', ->
 
 app.configure 'production', ->
   app.use express.errorHandler()
-
-app.all  '/', (req, res, next) ->
-  res.header "Access-Control-Allow-Origin", "*"
-  res.header "Access-Control-Allow-Headers", "X-Requested-With"
-  next()
 
 app.get  '/',                                          routes.index
 app.get  '/archives',                                  routes.archives
